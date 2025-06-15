@@ -1,27 +1,6 @@
 {
-	"biome.enabled": false,
-	"[javascript]": {
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	},
-	"[javascriptreact]": {
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	},
-	"[typescript]": {
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	},
-	"[typescriptreact]": {
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	},
-	"[json]": {
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	},
-	"[jsonc]": {
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	},
-	"[css]": {
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	},
-	"[scss]": {
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	}
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  }
 }
