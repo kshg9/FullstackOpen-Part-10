@@ -1,0 +1,52 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start API Server",
+      "type": "shell",
+      "command": [
+        "source \"$NVM_DIR/nvm.sh\" && nvm exec 20 npm start"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/rate-repository-api"
+      },
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "dedicated",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Reset API Server Data",
+      "type": "shell",
+      "command": [
+        "rm -rf database.sqlite && source \"$NVM_DIR/nvm.sh\" && nvm exec 20 npm run build && nvm exec 20 npm run seed:run"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/rate-repository-api"
+      },
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "dedicated",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Reset API Server Data and Start",
+      "dependsOn": [
+        "Reset API Server Data",
+        "Start API Server"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+    }
+  ]
+}

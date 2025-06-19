@@ -21,8 +21,6 @@ const useSignIn = () => {
 
     const accessToken = data?.authenticate?.accessToken
     if (accessToken) {
-      console.log('authStorage:', authStorage)
-      console.log('accessToken:', accessToken)
       await authStorage.setAccessToken(accessToken)
       await apolloClient.resetStore()
       navigate('/')

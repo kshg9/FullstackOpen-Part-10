@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     paddingBottom: 5,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.textPrimary,
   },
   fontColor: {
     color: theme.colors.textSecondary,
@@ -42,11 +42,18 @@ const AppBar = () => {
         <AppBarTab title={"Repositories"} to={'/'} />
         {
           user ? (
-            <Pressable onPress={signout}>
-              <Text style={styles.fontColor}>Sign out</Text>
-            </Pressable>
+            <>
+              <AppBarTab title={"Create a review"} to={'/create-review'} />
+              <AppBarTab title={"My reviews"} to={'/my-reviews'} />
+              <Pressable onPress={signout}>
+                <Text style={styles.fontColor}>Sign out</Text>
+              </Pressable>
+            </>
           ) : (
-            <AppBarTab title={"Sign in"} to={'/signin'} />
+            <>
+              <AppBarTab title={"Sign in"} to={'/signin'} />
+              <AppBarTab title={"Sign up"} to={'/signup'} />
+            </>
           )
         }
       </ScrollView>

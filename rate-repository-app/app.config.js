@@ -5,6 +5,9 @@ export default {
   extra: {
     apolloUri: process.env.APOLLO_URI,
   },
+  plugins: [
+    "expo-font",
+  ],
   slug: "rate-repository-app",
   version: "1.0.0",
   orientation: "portrait",

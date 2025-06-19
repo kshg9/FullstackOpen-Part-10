@@ -1,6 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
-import Constants from "expo-constants";
+import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
+import { Provider as PaperProvider } from "react-native-paper";
 import { NativeRouter } from "react-router-native";
 import Main from "./src/components/Main";
 import createApolloClient from "./src/components/utils/apolloClient";
@@ -11,13 +12,20 @@ const authStorage = new AuthStorage();
 const apolloClient = createApolloClient(authStorage);
 
 const App = () => {
-  console.log("Constants:", Constants.expoConfig)
+
+  const [fontsLoaded] = useFonts({
+    MaterialDesignIcons: require('react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf'),
+  });
+
+  if (!fontsLoaded) return null;
   return (
     <>
       <NativeRouter>
         <ApolloProvider client={apolloClient}>
           <AuthStorageContext.Provider value={authStorage}>
-            <Main />
+            <PaperProvider>
+              <Main />
+            </PaperProvider>
           </AuthStorageContext.Provider>
         </ApolloProvider>
       </NativeRouter>

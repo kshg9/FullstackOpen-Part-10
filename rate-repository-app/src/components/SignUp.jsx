@@ -2,12 +2,14 @@ import { useFormik } from "formik";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import * as yup from "yup";
 import useSignIn from "../hooks/useSignIn";
+import useSignUp from "../hooks/useSignUp";
 import ErrorPlaceHolder from "./ErrorPlaceHolder";
 import Text from "./Text";
 
 const initialValues = {
   username: '',
   password: '',
+  passwordConfirm: ''
 };
 
 const validationSchema = yup.object().shape({
@@ -21,6 +23,10 @@ const validationSchema = yup.object().shape({
     .required('Password is required')
     .min(5, 'Password must be at least 6 characters long')
     .max(50, 'Password must be at most 50 characters long'),
+  passwordConfirm: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Password fields must match')
+    .required('Password confirmation is required'),
 })
 
 const getInputStyle = (formikHandler, field) => [
@@ -28,23 +34,23 @@ const getInputStyle = (formikHandler, field) => [
   formikHandler.touched[field] && formikHandler.errors[field] && styles.inputErrorBorder,
 ];
 
-
-const SignIn = () => {
+const SignUp = () => {
+  const [signUp] = useSignUp();
   const [signIn] = useSignIn();
 
   const onSubmit = async (values) => {
-    const { username, password } = values;
     try {
-      await signIn({ username, password });
+      await signUp(values);
+      await signIn(values);
     } catch (e) {
       console.error('Sign-in failed:', e);
     }
   }
 
-  return <SignInForm onSubmit={onSubmit} />;
+  return <SignUpForm onSubmit={onSubmit} />;
 }
 
-export const SignInForm = ({ onSubmit }) => {
+export const SignUpForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -72,8 +78,18 @@ export const SignInForm = ({ onSubmit }) => {
       />
       {<ErrorPlaceHolder formikHandler={formik} field={'password'} />}
 
+      <TextInput
+        style={[styles.input, getInputStyle(formik, 'passwordConfirm')]}
+        secureTextEntry
+        placeholder="Password confirmation"
+        value={formik.values.passwordConfirm}
+        onChangeText={formik.handleChange('passwordConfirm')}
+        testID="passwordConfirmField"
+      />
+      {<ErrorPlaceHolder formikHandler={formik} field={'passwordConfirm'} />}
+
       <Pressable style={styles.button} onPress={formik.handleSubmit} testID="submitButton">
-        <Text color={"textSecondary"} fontWeight={'bold'}>Sign in</Text>
+        <Text color={"textSecondary"} fontWeight={'bold'}>Sign Up</Text>
       </Pressable>
     </View>
   )
@@ -105,4 +121,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SignIn;
+export default SignUp;
